@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 # Create your models here.
@@ -20,3 +22,15 @@ class Project(models.Model):
     # null = true allow vallue to be in database
     # blank = True allow to submit form
     demo_link = models.CharField(max_length=2000, null=True, blank=True)
+
+    # a link for source code
+    source_link = models.CharField(max_length=2000, null=True, blank=True)
+
+    # this give us tha date and the time field
+    # when we create this give us the stamp of the created
+    create = models.DateTimeField(auto_now_add=True)
+
+    # when django add to the database create an int id form 0
+    # we dont want this we better add a 16char id witch is unique and we dont
+    # have conflicts
+    id = models.UUIDField(defalt=uuid.uuid4, unique=True, primary_key=True)
