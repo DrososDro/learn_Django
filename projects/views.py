@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from .models import Project
+
 # Create your views here.
 prohectsList = [
     {
@@ -23,16 +25,16 @@ prohectsList = [
 
 def projects(request):
     # return HttpResponse("This is my page")
-    page = "Hello you are on the main Page"
-    number = 8
-    context = {"page": page, "number": number, "projects": prohectsList}
+    projects = Project.objects.all()
+    context = {"projects": projects}
     return render(request, "projects/projects.html", context)
 
 
 def project(request, pk):
     # return HttpResponse(f"This is the {pk} product")
-    projectObj = None
-    for i in prohectsList:
-        if i["id"] == pk:
-            projectObj = i
-    return render(request, "projects/single-project.html", {"projectObj": projectObj})
+    projectObj = Project.objects.get(id=pk)
+    return render(
+        request,
+        "projects/single-project.html",
+        {"projectObj": projectObj},
+    )
